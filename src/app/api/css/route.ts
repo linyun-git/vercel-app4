@@ -1,19 +1,16 @@
 import { NextResponse, NextRequest } from "next/server"
 
-const RANDOM_IMG = 'https://app3.suitesting.dev/api/random-image?from=css';
-const REDIRECT_JPG = 'https://app3.suitesting.dev/api/redirect-image?from=css';
-const GIF = 'https://app3.suitesting.dev/api/img-gif?from=css';
+const RANDOM_IMG = 'https://app4.suitesting.dev/api/random-image';
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
 
     const { searchParams } = new URL(req.url);
 
     const mailId = searchParams.get('mail_id');
-    const cssId = Date.now() % 20;
+    const tag = searchParams.get('tag');
     console.log(`
         mid: ${mailId}
-        cid: ${cssId}
-        f-ip: ${req.headers.get('x-forwarded-for')}
+        tag: ${tag}
         ua: ${req.headers.get('user-agent')}
   	`);
 
@@ -21,22 +18,10 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     headers.set('Content-Type', 'text/css');
 
     const css = `
-    .random-img {
-        background-image: url('${RANDOM_IMG}&mail_id=${mailId}&css_id=${cssId}');
-    }
-    .redirect-img {
-        background-image: url('${REDIRECT_JPG}&mail_id=${mailId}&css_id=${cssId}');
-    }
-    .gif-img {
-        background-image: url('${GIF}&mail_id=${mailId}&css_id=${cssId}');
-        width: 600px;
-        height: 441px;
-    }
-    .border {
-        border: 2px solid blue;
-    }
-    body::after {
-        content: 'cssId: ${cssId}';
+    .${tag}-test {
+        width: 200px;
+        height: 300px;
+        background-image: url('${RANDOM_IMG}?mail_id=${mailId}&tag=${tag}');
     }
   `;
 

@@ -5,16 +5,12 @@ const RANDOM_IMG = 'https://picsum.photos/200/300';
 export async function GET(req: NextRequest): Promise<NextResponse> {
 
     const { searchParams } = new URL(req.url);
-    const pos = searchParams.get('from');
     const mailId = searchParams.get('mail_id');
-    const cssId = searchParams.get('css_id');
-    const imageId = Date.now() % 20;
+    const tag = searchParams.get('tag');
 
     console.log(`
-        pos: ${pos}
-        ${mailId ? `mid: ${mailId}` : ''}
-        ${cssId ? `cid: ${cssId}` : ''}
-        iid: ${imageId}
+        mid: ${mailId}
+        tag: ${tag}
         f-ip: ${req.headers.get('x-forwarded-for')}
         ua: ${req.headers.get('user-agent')}
     `);
