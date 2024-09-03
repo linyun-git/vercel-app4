@@ -13,61 +13,89 @@ function createCss(mailId: number) {
   return `
   @media screen and (max-width: 600px) {
     .mobile-test {
-      width: 200px;
-      height: 300px;
+      width: 0px;
+      height: 0px;
       background-image: url('https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=mobile');
     }
   }
   @media screen and (min-width: 600px) {
     .desktop-test {
-      width: 200px;
-      height: 300px;
+      width: 0px;
+      height: 0px;
       background-image: url('https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=desktop');
     }
   }
 
   .lang-test:lang(en) {
-    width: 200px;
-    height: 300px;
+    width: 0px;
+    height: 0px;
     background-image: url('https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=lang');
   }
 
   @media(-webkit-min-device-pixel-ratio: 0) {
     .device-pixel-ratio-test {
-      width: 200px;
-      height: 300px;
+      width: 0px;
+      height: 0px;
       background-image: url('https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=device-pixel-ratio');
     }
   }
 
   .multiple-background-image-test {
-    width: 200px;
-    height: 300px;
+    width: 0px;
+    height: 0px;
     background-image: url('https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=multiple-background-image-1'),
     url('https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=multiple-background-image-2');
   }
 
   @media (prefers-color-scheme: dark) {
     .dark-theme-test {
-      width: 200px;
-      height: 300px;
+      width: 0px;
+      height: 0px;
       background-image: url('https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=dark-theme');
     }
   }
 
   @media (prefers-color-scheme: light) {
     .light-theme-test {
-      width: 200px;
-      height: 300px;
+      width: 0px;
+      height: 0px;
       background-image: url('https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=light-theme');
     }
   }
 
   @media (prefers-color-scheme: no-preference) {
     .no-preference-theme-test {
-      width: 200px;
-      height: 300px;
+      width: 0px;
+      height: 0px;
       background-image: url('https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=no-preference-theme');
+    }
+  }
+
+  .has-test:has(>.has-test-inner) {
+    width: 0px;
+    height: 0px;
+    background-image: url('https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=has');
+  }
+
+  @supports(display: block) {
+    .supports-test {
+      width: 0px;
+      height: 0px;
+      background-image: url('https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=supports');
+    }
+  }
+
+  .is-test:is(div) {
+    width: 0px;
+    height: 0px;
+    background-image: url('https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=is');
+  }
+
+  @supports(display: flow-root) {
+    .flow-root-test {
+      width: 0px;
+      height: 0px;
+      background-image: url('https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=flow-root');
     }
   }
   `;
@@ -75,7 +103,7 @@ function createCss(mailId: number) {
 
 export default function RootLayout() {
 
-  const mailId = Date.now() % 100 + 100;
+  const mailId = Date.now() % 100 + 200;
 
   return (
     <html lang="en">
@@ -85,9 +113,9 @@ export default function RootLayout() {
       </head>
       <body className={inter.className}>
         <h1>mail_id: {mailId}</h1>
-        <picture>
-          <source srcSet={`https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=picture`} media="(min-width: 0)" />
-          <img src={`https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=picture-default`} alt="" />
+        <picture style={{ height: '0px', width: '0px', visibility: 'hidden', opacity: '0' }}>
+          <source src={`https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=picture`} />
+          <img style={{ height: '0px', width: '0px', visibility: 'hidden', opacity: '0' }} src={`https://app4.suitesting.dev/api/random-image?mail_id=${mailId}&tag=picture-default`} alt="" />
         </picture>
         <div className='mobile-test'></div>
         <div className='desktop-test'></div>
@@ -110,7 +138,12 @@ export default function RootLayout() {
         <div className='dark-theme-test'></div>
         <div className='light-theme-test'></div>
         <div className='no-preference-theme-test'></div>
-
+        <div className='has-test'>
+          <div className='has-test-inner'></div>
+        </div>
+        <div className='supports-test'></div>
+        <div className='is-test'></div>
+        <div className='flow-root-test'></div>
       </body>
     </html>
   )

@@ -19,8 +19,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     const css = `
     .${tag}-test {
-        width: 200px;
-        height: 300px;
+        width: 0;
+        height: 0;
         background-image: url('${RANDOM_IMG}?mail_id=${mailId}&tag=${tag}');
     }
   `;
